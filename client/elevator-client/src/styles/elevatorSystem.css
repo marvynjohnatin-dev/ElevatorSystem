@@ -1,0 +1,663 @@
+/* General Layout */
+.elevator-simulation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 1200px;
+  height: 90vh;
+  padding: 24px;
+  background-color: #f3f4f6;
+  margin: 0 auto;
+  border: 1px solid #d1d5db;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.simulation-title {
+  font-size: 1.875rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #1f2937;
+  text-align: center;
+}
+
+/* Loading & Error States */
+.loading-container, .error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  text-align: center;
+  padding: 2rem;
+}
+
+.error-container h2 {
+  color: #ef4444;
+  margin-bottom: 1rem;
+}
+
+.retry-button {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.retry-button:hover {
+  background-color: #2563eb;
+}
+
+/* Main Simulation Area */
+.simulation-area {
+  display: flex;
+  flex: 1;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+/* Building & Floors */
+.building {
+  width: 12rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  flex-shrink: 0;
+}
+
+.building-header {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #4b5563;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.building-title {
+  text-align: center;
+  font-weight: 600;
+  color: white;
+}
+
+.floors-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.floor {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 0.5rem;
+  justify-content: space-between;
+  transition: background-color 0.3s ease;
+}
+
+.floor.active {
+  background-color: #d1fae5;
+}
+
+.floor-number {
+  font-weight: bold;
+  font-size: 1.125rem;
+  width: 2rem;
+  text-align: center;
+  color: #1f2937;
+  transition: color 0.3s ease;
+}
+
+.floor-number.active {
+  color: #10b981;
+}
+
+.floor-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.direction-button {
+  padding: 0.25rem;
+  border-radius: 0.25rem;
+  background-color: #e5e7eb;
+  cursor: pointer;
+  border: 1px solid #d1d5db;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  transform: scale(1);
+}
+
+.direction-button.active {
+  background-color: #f59e0b;
+  transform: scale(1.1);
+}
+
+/* Elevators Container */
+.elevators-container {
+  flex: 1;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Individual Elevator */
+.elevator {
+  flex: 1 1 200px;
+  min-width: 200px;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+
+.elevator-header {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #4b5563;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.elevator-title {
+  text-align: center;
+  font-weight: 600;
+  color: white;
+}
+
+.elevator-status {
+  padding: 0.75rem;
+  border-bottom: 1px solid #e5e7eb;
+  background-color: #f9fafb;
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.elevator-info p {
+  margin: 0;
+}
+
+.floor-display {
+  font-weight: 500;
+  color: #1f2937;
+  transition: color 0.3s ease;
+}
+
+.floor-display.moving {
+  color: #10b981;
+}
+
+.status-text {
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.status-indicator {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 9999px;
+  background-color: #9ca3af;
+}
+
+.status-indicator.moving {
+  background-color: #10b981;
+}
+
+.status-indicator.loading {
+  background-color: #f59e0b;
+}
+
+.details-container {
+  margin-top: 0.5rem;
+}
+
+.detail-text {
+  font-size: 0.875rem;
+  color: #1f2937;
+  margin: 0.25rem 0;
+}
+
+/* Passenger Visualization */
+.passenger-section {
+  margin-top: 0.75rem;
+}
+
+.passenger-count {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #1f2937;
+  margin-bottom: 0.25rem;
+}
+
+.capacity-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  height: 1.5rem;
+  background-color: #e5e7eb;
+  border-radius: 0.25rem;
+  padding: 0.125rem;
+}
+
+.capacity-bar {
+  height: 100%;
+  background-color: #9ca3af;
+  border-radius: 0.125rem;
+  transition: width 0.3s ease, background-color 0.3s ease;
+}
+
+.capacity-bar.low {
+  background-color: #10b981;
+}
+
+.capacity-bar.medium {
+  background-color: #f59e0b;
+}
+
+.capacity-bar.full {
+  background-color: #ef4444;
+}
+
+.passenger-icons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-top: 0.25rem;
+}
+
+.passenger-icon {
+  width: 1rem;
+  height: 1.5rem;
+  border-radius: 0.25rem;
+  background-color: #e5e7eb;
+  transition: background-color 0.3s ease;
+}
+
+.passenger-icon.filled {
+  background-color: #1f2937;
+}
+
+/* Passenger Destinations */
+.destinations-container {
+  margin-top: 0.5rem;
+  padding: 0.375rem;
+  background-color: #f3f4f6;
+  border-radius: 0.25rem;
+  border: 1px solid #e5e7eb;
+}
+
+.destinations-title {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #1f2937;
+  margin-bottom: 0.25rem;
+}
+
+.destinations-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.destination-tag {
+  padding: 0.125rem 0.375rem;
+  background-color: #e5e7eb;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  color: #1f2937;
+  border: 1px solid #d1d5db;
+}
+
+/* Floor Buttons */
+.floor-buttons-container {
+  flex: 1;
+  padding: 0.75rem;
+  overflow-y: auto;
+}
+
+.floor-button-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.5rem;
+}
+
+.floor-button {
+  padding: 0.5rem;
+  border-radius: 9999px;
+  background-color: #e5e7eb;
+  color: #1f2937;
+  cursor: pointer;
+  border: 1px solid #d1d5db;
+  font-weight: normal;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.floor-button.current {
+  background-color: #10b981;
+  color: white;
+  font-weight: bold;
+}
+
+.floor-button.target {
+  background-color: #f59e0b;
+  color: white;
+  font-weight: bold;
+}
+
+/* Random Call Button */
+.random-call-container {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.random-call-button {
+  background-color: #3b82f6;
+  color: white;
+  font-weight: bold;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  font-size: 1rem;
+}
+
+.random-call-button:hover {
+  background-color: #2563eb;
+}
+
+/* ADD THESE STYLES TO YOUR EXISTING elevatorSystem.css FILE */
+
+/* Target Floor Display in Building */
+.floor-targets {
+  display: flex;
+  gap: 0.25rem;
+  margin: 0.25rem 0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.target-indicator {
+  background-color: #3b82f6;
+  color: white;
+  font-size: 0.625rem;
+  font-weight: bold;
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.75rem;
+  border: 1px solid #2563eb;
+  animation: pulse 1.5s infinite;
+}
+
+.target-indicator.elevator-0 { background-color: #ef4444; border-color: #dc2626; }
+.target-indicator.elevator-1 { background-color: #10b981; border-color: #059669; }
+.target-indicator.elevator-2 { background-color: #f59e0b; border-color: #d97706; }
+.target-indicator.elevator-3 { background-color: #8b5cf6; border-color: #7c3aed; }
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Target Floor Section in Elevator Panel */
+.target-floor-section {
+  margin: 0.75rem 0;
+  padding: 0.75rem;
+  background-color: #f8fafc;
+  border-radius: 0.5rem;
+  border: 1px solid #e2e8f0;
+}
+
+.current-target {
+  margin-bottom: 0.5rem;
+}
+
+.current-target .detail-text {
+  font-size: 0.875rem;
+  color: #1f2937;
+  margin: 0;
+}
+
+.all-targets {
+  margin-bottom: 0.5rem;
+}
+
+.targets-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 0.375rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+.targets-list {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  flex-wrap: wrap;
+}
+
+.target-floor {
+  background-color: #dbeafe;
+  color: #1d4ed8;
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.375rem;
+  border: 1px solid #93c5fd;
+  transition: all 0.2s ease;
+}
+
+.target-floor.next-target {
+  background-color: #fef3c7;
+  color: #d97706;
+  border-color: #fbbf24;
+  animation: glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from { box-shadow: 0 0 5px rgba(217, 119, 6, 0.3); }
+  to { box-shadow: 0 0 10px rgba(217, 119, 6, 0.6); }
+}
+
+.arrow {
+  color: #6b7280;
+  font-weight: bold;
+  margin: 0 0.25rem;
+}
+
+.route-description {
+  margin-top: 0.5rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+.route-text {
+  font-size: 0.75rem;
+  color: #6b7280;
+  font-style: italic;
+  margin: 0;
+  text-align: center;
+}
+
+/* Floor Buttons with Target Indicators */
+.floor-button {
+  position: relative;
+  padding: 0.5rem;
+  border-radius: 9999px;
+  background-color: #e5e7eb;
+  color: #1f2937;
+  cursor: pointer;
+  border: 1px solid #d1d5db;
+  font-weight: normal;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.floor-button.current {
+  background-color: #10b981;
+  color: white;
+  font-weight: bold;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
+}
+
+.floor-button.next-target {
+  background-color: #f59e0b;
+  color: white;
+  font-weight: bold;
+  animation: next-target-pulse 1.5s ease-in-out infinite;
+}
+
+.floor-button.in-route {
+  background-color: #3b82f6;
+  color: white;
+  font-weight: 500;
+}
+
+@keyframes next-target-pulse {
+  0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 0 8px rgba(245, 158, 11, 0.4);
+  }
+  50% { 
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.7);
+  }
+}
+
+.target-dot {
+  position: absolute;
+  top: 0.125rem;
+  right: 0.125rem;
+  width: 0.375rem;
+  height: 0.375rem;
+  background-color: #ef4444;
+  border-radius: 50%;
+  font-size: 0.5rem;
+  animation: dot-pulse 1s ease-in-out infinite;
+}
+
+@keyframes dot-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Passenger Destinations */
+.destination-tag {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  background-color: #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 0.75rem;
+  color: #1f2937;
+  border: 1px solid #d1d5db;
+  margin: 0.125rem;
+  min-width: 3rem;
+}
+
+.passenger-id {
+  font-size: 0.625rem;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.destination-floor {
+  font-weight: bold;
+  color: #374151;
+}
+
+/* Legend for target indicators */
+.targets-legend {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  padding: 0.75rem;
+  background-color: #f8fafc;
+  border-radius: 0.5rem;
+  border: 1px solid #e2e8f0;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.875rem;
+  color: #374151;
+}
+
+.legend-color {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 0.125rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.legend-color.current { background-color: #10b981; }
+.legend-color.next-target { background-color: #f59e0b; }
+.legend-color.in-route { background-color: #3b82f6; }
+
+/* status indicators */
+.elevator[data-has-targets="true"] .elevator-status::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #3b82f6, #10b981, #f59e0b);
+  border-radius: 0.25rem 0.25rem 0 0;
+  animation: progress-bar 2s ease-in-out infinite;
+}
+
+@keyframes progress-bar {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Responsive adjustments for target displays */
+@media (max-width: 768px) {
+  .targets-list {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .target-floor {
+    text-align: center;
+  }
+  
+  .floor-targets {
+    justify-content: center;
+  }
+  
+  .targets-legend {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
